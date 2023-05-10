@@ -3,10 +3,11 @@ const { Validation } = require('./middleware');
 var router = express.Router();
 
 
-let comments = [
+let comments = 
+[
     {
         id:1,
-        name:`Roman`,
+        name:`Michael`,
         Age:21
     },
     {
@@ -15,14 +16,9 @@ let comments = [
         Age:21
     }
 ];
+
+
 let users = {}
-
-
-
-router.get('/', function(req,res){
-    res.send('Hello!');
-})
-
 
 router.get('/stats', (req,res)=>
 {
@@ -73,11 +69,13 @@ router.get(`/comments`, function(req,res)
 
 
 router.post('/comments', Validation, function(req,res){
-    let data = req.body;
-    if (data){
-        comments.push(data)
+    let data = JSON.parse(req.body);
+    if (data)
+    {
+        data.dateCreated = new Date();
+        comments.push((data))
     }
-    res.send(comments)    
+    res.send(comments);    
 })
 
 

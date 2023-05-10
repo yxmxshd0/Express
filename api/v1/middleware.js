@@ -5,9 +5,9 @@ const Helmet=helmet();
 const Morgan=morgan(':method :url :status :res[content-length] - :response-time ms');
 
 function Validation(req, res, next) {
-    const userInput = req.body;
+    const userInput = JSON.stringify(req.body);
     const regex = /[@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
-    let af = regex.test(userInput)
+    let af = regex.test(userInput[`id`,`name`,`Age`])
     if (af) {
         return res.send(400,'Неправильный формат ввода');
     }
@@ -15,7 +15,10 @@ function Validation(req, res, next) {
 }
 
 function Autorization(req,res,next) {
-    if (req.headers['api-key']!=='1234') {return res.send(400,'Неправильный ключ API')};
+    if (req.headers['api-key']!=='1234') 
+        {
+            res.send(400,'Неправильный ключ API')
+        };
     next();
 }
 

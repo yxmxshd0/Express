@@ -6,8 +6,6 @@ const config = require(`./config`)
 
 var app=express();
 
-app.use(express.static('public'))
-
 app.use(Helmet)
 app.use(Morgan)
 
@@ -15,7 +13,7 @@ app.use(bodyParser.text());
 app.use(express.static('public'))
 
 
-app.use('/api/v1', router); //уровень маршрутизатора
+app.use('/api/v1', Autorization,  router); //уровень маршрутизатора
 app.use(BadRequest) //уровень приложения
 
 
