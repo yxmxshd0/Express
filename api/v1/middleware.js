@@ -5,11 +5,18 @@ const Helmet=helmet();
 const Morgan=morgan(':method :url :status :res[content-length] - :response-time ms');
 
 function Validation(req, res, next) {
-    const userInput = JSON.stringify(req.body);
-    const regex = /[@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
-    let af = regex.test(userInput[`id`,`name`,`Age`])
-    if (af) {
-        return res.send(400,'Неправильный формат ввода');
+    if (req.headers[`Content-Type`]==`aplication/json`)
+    {
+        const userInput = JSON.stringify(req.body);
+        const regex = /[@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
+        let af = regex.test(userInput[`id`,`name`,`Age`])
+        if (af) {
+            return res.send(400,'Неправильный формат ввода');
+        }
+    }
+    else
+    {
+        res.status = 400
     }
     next();
 }
